@@ -16,7 +16,7 @@ function TodoList(props) {
             </thead>
             <tbody>
                 {props.todos.map((todo, index) => {
-                    return <Todo key={todo._id ? todo._id : null} todo={todo} openEditModal={props.openEditModal} deleteTodo={props.deleteTodo} index={index} />;
+                    return <Todo key={todo._id ? todo._id : null} todo={todo} openEditModal={props.openEditModal} deleteTodo={props.deleteTodo} updateTodoStatus={props.updateTodoStatus} index={index} />;
                 })}
             </tbody>
         </table>

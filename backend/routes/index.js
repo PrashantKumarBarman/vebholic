@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const todoController = require('../controllers/todoController');
 
+// Router for fetching all todos by status
+router.get('/todo/status/:status', todoController.fetchTodosByStatus);
+
 // Route for fetching all todos
 router.get('/todo', todoController.fetchAllTodos);
 

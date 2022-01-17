@@ -65,6 +65,22 @@ module.exports = {
         }
     },
     /**
+     * Fetches all todos in an array
+     * @param {Object} req Request object
+     * @param {Object} res Response object
+     * @returns {void}
+     */
+     fetchTodosByStatus: async function(req, res) {
+        try {
+            let todos = await TodoModel.getTodosByStatus(req.params.status);
+            res.status(200).json(todos);
+        }
+        catch(err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    },
+    /**
      * Deletes a todo by id
      * @param {Object} req Request object
      * @param {Object} res Response object

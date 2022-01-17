@@ -21,11 +21,19 @@ function App() {
     setShowAddModal(!showAddModal);
   }
 
+  /**
+   * 
+   * @param {Object} todo Todo object
+   */
   function addTodo(todo) {
     let temp = [todo, ...todos];
     setTodos(temp);
   }
 
+  /**
+   * 
+   * @param {Object} todo Updated todo object 
+   */
   function updateTodo(todo) {
     let temp = [...todos];
     for(let i = 0; i < todos.length; i++) {
@@ -36,6 +44,25 @@ function App() {
     setTodos(temp);
   }
 
+  /**
+   * 
+   * @param {String} todoId Todo id
+   * @param {String} status New status
+   */
+  function updateTodoStatus(todoId, status) {
+    let temp = [...todos];
+    for(let i = 0; i < todos.length; i++) {
+      if(temp[i]._id === todoId) {
+        temp[i].status = status;
+      }
+    }
+    setTodos(temp);
+  }
+
+  /**
+   * 
+   * @param {String} todoId Todo id
+   */
   function deleteTodo(todoId) {
     let temp = todos.filter((element) => {
       return element._id !== todoId;
@@ -62,12 +89,26 @@ function App() {
     }
   }
 
+  /**
+   * Fetches todos by status
+   * @param {String} status 
+   */
+  async function fetchTodoByStatus(status) {
+    try {
+      let response = await axios.get(`/todo/status/${status}`);
+      setTodos(response.data);
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="container-fluid">
-      <Header openAddModal={toggleAddModal} />
+      <Header openAddModal={toggleAddModal} filterTodosByStatus={fetchTodoByStatus} />
       <AddModal show={showAddModal} handleClose={toggleAddModal} addTodo={addTodo} />
       <EditModal show={showEditModal} handleClose={toggleEditModal} todo={editTodo} updateTodo={updateTodo} />
-      <TodoList todos={todos} openEditModal={openEditModal} deleteTodo={deleteTodo} />
+      <TodoList todos={todos} openEditModal={openEditModal} deleteTodo={deleteTodo} updateTodoStatus={updateTodoStatus} />
     </div>
   );
 }

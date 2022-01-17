@@ -2,7 +2,7 @@ const mongoose = require('../db');
 
 const TodoSchema = mongoose.Schema({
     text: { type: String, required: true },
-    status: { type: String, default: 'active' },
+    status: { type: String, default: 'Active' },
     createdOn: { type: Date, default: Date.now, index: true }
 });
 
@@ -48,6 +48,20 @@ module.exports = {
     getAllTodos: async function() {
         try {
             let todos = await TodoModel.find({}).sort({ createdOn: -1 }).exec();
+            return todos;
+        }
+        catch(err) {
+            console.log(err);
+            return [];
+        }
+    },
+    /** 
+     * Returns array of all the todos
+     * @returns {Promise<Array<Object>>} Promise object which resolves to array of todos
+     */
+     getTodosByStatus: async function(status) {
+        try {
+            let todos = await TodoModel.find({ status: status }).sort({ createdOn: -1 }).exec();
             return todos;
         }
         catch(err) {
