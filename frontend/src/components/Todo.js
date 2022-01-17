@@ -1,36 +1,31 @@
-import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 
 function Todo(props) {
-    let [todo, setTodo] = useState(null);
-
-    useEffect(() => {
-        setTodo(props.todo);
-    }, [props.todo]);
 
     function openEditModal() {
-        props.openEditModal(todo._id);
+        props.openEditModal(props.todo);
     }
 
     async function deleteTodo() {
         try {
-            await axios.delete(`/todo/${todo._id}`);
-            props.deleteTodo(todo._id);
+            await axios.delete(`/todo/${props.todo._id}`);
+            props.deleteTodo(props.todo._id);
         }
         catch(err) {
             console.log(err);
         }
     }
 
-    if(!todo) return null;
+    if(!props.todo) return null;
 
     return (
         <tr>
-            <td>{todo.text}</td>
-            <td>{todo.status}</td>
-            <td>{todo.createdOn}</td>
+            <td>{props.index + 1}</td>
+            <td>{props.todo.text}</td>
+            <td>{props.todo.status}</td>
+            <td>{props.todo.createdOn}</td>
             <td>
                 <button className='btn btn-success' onClick={openEditModal}>
                 <FontAwesomeIcon icon={faEdit} className='iconbtn'/>Edit

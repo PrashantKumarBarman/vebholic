@@ -1,17 +1,12 @@
-import { useState, useEffect } from 'react';
 import Todo from './Todo';
 
 function TodoList(props) {
-    let [todos, setTodos] = useState([]);
-
-    useEffect(() => {
-        setTodos(props.todos);
-    }, [props.todos]);
 
     return (
         <table className='table table-bordered m-1'>
             <thead>
                 <tr>
+                    <th>S.No.</th>
                     <th>Todo</th>
                     <th>Status</th>
                     <th>Created on</th>
@@ -20,8 +15,8 @@ function TodoList(props) {
                 </tr>
             </thead>
             <tbody>
-                {todos.map((todo, index) => {
-                    return <Todo todo={todo} openEditModal={props.openEditModal} deleteTodo={props.deleteTodo} />;
+                {props.todos.map((todo, index) => {
+                    return <Todo key={todo._id ? todo._id : null} todo={todo} openEditModal={props.openEditModal} deleteTodo={props.deleteTodo} index={index} />;
                 })}
             </tbody>
         </table>

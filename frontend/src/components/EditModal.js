@@ -7,11 +7,8 @@ function EditModal(props) {
     let [todo, setTodo] = useState({});
 
     useEffect(() => {
-        let temp = props.todos.filter((element) => {
-            return element._id === props.todoId;
-        });
-        setTodo(temp[0]);
-    }, [props.todoId]);
+        setTodo(props.todo);
+    }, [props.todo]);
 
     function handleChange(e) {
         setTodo({ ...todo, text: e.target.value });
@@ -20,7 +17,7 @@ function EditModal(props) {
     async function handleSubmit(e) {
         try {
             e.preventDefault();
-            let result = await axios.put(`/todo/${todo._id}`, {
+            await axios.put(`/todo/${todo._id}`, {
                 text: todo.text
             });
             props.updateTodo(todo);

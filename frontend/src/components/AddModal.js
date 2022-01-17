@@ -16,7 +16,7 @@ function AddModal(props) {
             let result = await axios.post('/todo', {
                 text: todo
             });
-            props.addTodo(result.body);
+            props.addTodo(result.data);
         }
         catch(err) {
             console.log(err);

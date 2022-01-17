@@ -11,7 +11,7 @@ function App() {
   let [todos, setTodos] = useState([]);
   let [showAddModal, setShowAddModal] = useState(false);
   let [showEditModal, setShowEditModal] = useState(false);
-  let [editId, setEditId] = useState('');
+  let [editTodo, setEditTodo] = useState({});
 
   useEffect(() => {
     fetchTodos();
@@ -29,8 +29,8 @@ function App() {
   function updateTodo(todo) {
     let temp = [...todos];
     for(let i = 0; i < todos.length; i++) {
-      if(todos[i]._id === todo._id) {
-        todos[i].text = todo.text;
+      if(temp[i]._id === todo._id) {
+        temp[i] = todo;
       }
     }
     setTodos(temp);
@@ -47,8 +47,8 @@ function App() {
     setShowEditModal(!showEditModal);
   }
 
-  function openEditModal(id) {
-    setEditId(id);
+  function openEditModal(todo) {
+    setEditTodo(todo);
     setShowEditModal(!showEditModal);
   }
 
@@ -66,7 +66,7 @@ function App() {
     <div className="container-fluid">
       <Header openAddModal={toggleAddModal} />
       <AddModal show={showAddModal} handleClose={toggleAddModal} addTodo={addTodo} />
-      <EditModal show={showEditModal} handleClose={toggleEditModal} todos={todos} todoId={editId} updateTodo={updateTodo} />
+      <EditModal show={showEditModal} handleClose={toggleEditModal} todo={editTodo} updateTodo={updateTodo} />
       <TodoList todos={todos} openEditModal={openEditModal} deleteTodo={deleteTodo} />
     </div>
   );
